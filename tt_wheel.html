@@ -118,433 +118,235 @@
                 transform: rotate(150deg);
             }
 
-
             .segment7
-
             {
-
                 background-color:#FF2255;
-
                 z-index:10;
-
-                    transform: rotate(180deg);
-
+                transform: rotate(180deg);
             }
 
-
             .segment8
-
             {
-
                 background-color:#AAFF22;
-
                 z-index:20;
-
-                    transform: rotate(210deg);
-
+                transform: rotate(210deg);
             }
 
 
             .segment9
-
             {
-
                 background-color:#9944EE;
-
                 z-index:30;
-
-                    transform: rotate(240deg);
-
+                transform: rotate(240deg);
             }
 
 
             .segment10
-
             {
-
                 background-color:#FF3300;
-
                 z-index:40;
-
-                    transform: rotate(270deg);
-
+                transform: rotate(270deg);
             }
-
 
             .segment11
-
             {
-
                 background-color:#338800;
-
                 z-index:50;
-
-                    transform: rotate(300deg);
-
+                transform: rotate(300deg);
             }
-
 
             .segment12
-
             {
-
                 background-color:#EE33AA;
-
                 z-index:60;
-
-                    transform: rotate(330deg);
-
+                transform: rotate(330deg);
             }
-
         </style>
 
-
         <script>
-
         var segments=[];
 
-
         for (i=12;i>=1;i--)
-
         {
-
             segments[i]=[];
-
             segments[i][0]=(i-1)*30;
-
             segments[i][1]=segments[i][0]+29;
-
         }
 
-
         segments[1][2]="";
-
         segments[2][2]="a plush Teddy Bear";
-
         segments[3][2]="$50 IKEA voucher";
-
         segments[4][2]="";
-
         segments[5][2]="";
-
         segments[6][2]="$1,000";
-
         segments[7][2]="a Sony vacuum Cleaner";
-
         segments[8][2]="a Brietlings Watch";
-
         segments[9][2]="an all-expenses paid trip to Tokyo";
-
         segments[10][2]="";
-
         segments[11][2]="a one-year gym membership";
-
         segments[12][2]="";
 
-
         document.onmousedown=mousedown;
-
         document.onmouseup=mouseup;
 
-
         function mousedown(e)
-
         {
-
-                        if (!e)
-
-                        {
-
-                                var e=window.event;
-
-                        }
-
-
-            if (document.getElementById("txtStatus").innerHTML=="Stopped")
-
+            if (!e)
             {
-
-                document.getElementById("hidMousedownX").value=e.clientX;
-
-                document.getElementById("hidMousedownY").value=e.clientY;
-
+                var e=window.event;
             }
 
+            if (document.getElementById("txtStatus").innerHTML=="Stopped")
+            {
+                document.getElementById("hidMousedownX").value=e.clientX;
+                document.getElementById("hidMousedownY").value=e.clientY;
+            }
         }          
 
-
         function mouseup(e)
-
         {
-
-                        if (!e)
-
-                        {
-
-                                var e=window.event;
-
-                        }
-
+            if (!e)
+            {
+                var e=window.event;
+            }
 
             if (document.getElementById("txtStatus").innerHTML=="Stopped")
-
             {
-
                 var mousedownx=document.getElementById("hidMousedownX");
-
                 var mousedowny=document.getElementById("hidMousedownY");
 
-
                 var diffx;
-
                 var diffy;
-
 
                 var currentpos=document.getElementById("hidPos");
 
-
                 if (parseInt(mousedownx.value)!=-1&&parseInt(mousedownx.value)!=-1)
-
                 {
-
                     diffx=Math.abs(e.clientX-parseInt(mousedownx.value));
-
                     diffy=Math.abs(e.clientY-parseInt(mousedowny.value));
 
-
                     if (diffx+diffy>0)
-
                     {
-
                         if (diffx>diffy)
-
                         {
-
                             currentpos.value=parseInt(currentpos.value)+diffx;
-
                         }
-
                         else
-
                         {
-
                             currentpos.value=parseInt(currentpos.value)+diffy;
-
                         }
-
 
                         mousedownx.value="-1";
-
                         mousedowny.value="-1";
-
                         rotatewheel();
-
                     }
-
                 }
-
             }
-
         }
 
-
         function rotatewheel()
-
         {
-
             var currentstatus=document.getElementById("txtStatus");
-
             currentstatus.innerHTML="Spinning...";
 
-
             var currentpos=document.getElementById("hidPos");
-
             var wheel=document.getElementById("wheel_wrapper");
 
             wheel.style.transitionTimingFunction="ease-out";
-
             wheel.style.transitionDuration="10s";
-
             wheel.style.transform="rotate("+currentpos.value+"deg)";
-
 
             currentpos.value=parseInt(currentpos.value)%360;
 
-
             setTimeout(function(){rotatewheel_instant()},10000);
-
         }
 
 
         function rotatewheel_instant()
-
         {
-
             var currentpos=document.getElementById("hidPos");
 
-
             var wheel=document.getElementById("wheel_wrapper");
-
             wheel.style.transitionTimingFunction="";
-
             wheel.style.transitionDuration="0s";
-
             wheel.style.transform="rotate("+currentpos.value+"deg)";
 
-
             currentstatus=document.getElementById("txtStatus");
-
             currentstatus.innerHTML="Stopped";
-
           
-
             for (i=1;i<=12;i++)
-
             {
-
-                if (parseInt(currentpos.value)>=segments[i][0]&&parseInt(currentpos.value)<=segments[i]
-
-
-[1])
-
+                if (parseInt(currentpos.value)>=segments[i][0]&&parseInt(currentpos.value)<=segments[i][1])
                 {
-
                     if (segments[i][2]=="")
-
                     {
-
                         alert("Sorry, you didn't win anything. Better luck next time!");
-
                     }
-
                     else
-
                     {
-
                         alert("Congratulations! You've won "+segments[i][2]+"!");
-
                     }
-
                 }
-
             }          
-
         }
-
         </script>
-
     </head>
 
-
     <body>
-
         <div id="info_wrapper">
-
             <div id="txtStatus">Stopped</div>
-
             <input type="hidden" id="hidPos" value="0" onchange="rotatewheel();">
-
             <input type="hidden" id="hidMousedownX" value="-1">
-
             <input type="hidden" id="hidMousedownY" value="-1">
-
             <div id="triangle"></div>
-
         </div>
 
         <div id="wheel_wrapper">
-
             <div class="semicircle_wrapper wheel2">
-
                 <div class="segment_wrapper semicircle2">
-
                     <div class="segment7 segment">
-
                         <p>G</p>
-
                     </div>
-
                     <div class="segment8 segment">
-
                         <p>H</p>
-
                     </div>
-
                     <div class="segment9 segment">
-
                         <p>I</p>
-
                     </div>
-
                     <div class="segment10 segment">
-
                         <p>J</p>
-
                     </div>
-
                     <div class="segment11 segment">
-
                         <p>K</p>
-
                     </div>
-
                     <div class="segment12 segment">
-
                         <p>L</p>
-
                     </div>
-
                 </div>
-
             </div>
-
 
             <div class="semicircle_wrapper wheel1">
-
                 <div class="segment_wrapper semicircle1">
-
                     <div class="segment1 segment">
-
                         <p>A</p>
-
                     </div>
-
                     <div class="segment2 segment">
-
                         <p>B</p>
-
                     </div>
-
                     <div class="segment3 segment">
-
                         <p>C</p>
-
                     </div>
-
                     <div class="segment4 segment">
-
                         <p>D</p>
-
                     </div>
-
                     <div class="segment5 segment">
-
                         <p>E</p>
-
                     </div>
-
                     <div class="segment6 segment">
-
                         <p>F</p>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </body>
-
 </html>
