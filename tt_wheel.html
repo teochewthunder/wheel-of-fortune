@@ -7,6 +7,8 @@
             {
                 width:100%;
                 text-align:center;
+		        position:relative;	
+		        z-index:200;	
             }
 
             #triangle
@@ -28,7 +30,19 @@
                 position:relative;
                 margin:0 auto 400px auto;
             }
-
+            
+            #safari_fix
+            {
+                width:500px;
+                height:500px;
+                position:absolute;
+		        z-index:100;
+		        margin-left:-120px;
+		        margin-top:-120px;
+                border:120px solid #FFFFFF; /*fix*/
+		        border-radius:50%;
+            }
+            
             .semicircle_wrapper
             {
                 width:250px;
@@ -323,6 +337,9 @@
         </div>
 
         <div id="wheel_wrapper">
+            <div id="safari_fix">
+		
+            </div>
             <div class="semicircle_wrapper wheel2">
                 <div class="segment_wrapper semicircle2">
                     <div class="segment7 segment">
